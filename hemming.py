@@ -1,5 +1,6 @@
 import tkinter as tk
-
+from random import randint
+from random import seed
 
 
 
@@ -7,6 +8,8 @@ import tkinter as tk
 
 
 def start():
+
+    global_result = ""
 
     def XOR(v1,v2):
         if((v1 == 0 and v2 == 0) or (v1 == 1 and v2 == 1)):
@@ -39,8 +42,9 @@ def start():
             str_saida = ""
             for i in range(len(entrada)):
                 str_saida = str_saida + str(entrada[i])
+            
 
-            l_resultado['text'] = "Hamming realizado! " + str_saida
+            l_resultado['text'] = str_saida
 
 
         elif( len(entrada) == 4):
@@ -53,6 +57,25 @@ def start():
 
 
 
+
+    def transmite_com_erro():
+        ham_correto = list(  l_resultado['text'] )
+
+        print(ham_correto)
+
+        seed(420)
+
+        posi = randint(0, len(ham_correto)-1)
+
+        print("CORRETO: " + global_result + " POSI_ERRO: " + str(posi))
+
+        if( int(ham_correto[posi]) == 1):
+            ham_correto[posi] = "0"
+        else:
+            ham_correto[posi] = "1"
+
+        print("\nERRO: " + str(ham_correto))
+        
 
 
 
@@ -80,6 +103,8 @@ def start():
     b_about = tk.Button(master=window, text="Gerar Hamming",width=50, command=gera_hamming, bg="grey")
     b_about.grid(row=2,column=1)
 
+    b_erro = tk.Button(master=window, text="Transmitir",width=50, command=transmite_com_erro, bg="red")
+    b_erro.grid(row=5,column=1)
 
 
     l_saida = tk.Label(master=window, text="" )
